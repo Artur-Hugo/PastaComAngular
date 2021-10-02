@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-inicio',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InicioComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
-  ngOnInit(): void {
+  ngOnInit(){
+    //Assim que dar f5 a sessão vai expirar e com isso vai voltar para a tela de entrar
+    if(environment.token == ''){
+      alert('Sua seção expirou, faça o login novamente.')
+      this.router.navigate(['/entrar'])
+    }
+
   }
 
 }
