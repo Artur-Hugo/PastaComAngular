@@ -11,6 +11,7 @@ import { EntrarComponent } from './entrar/entrar.component';
 import { CadastrarComponent } from './cadastrar/cadastrar.component';
 import { RodapeComponent } from './rodape/rodape.component';
 import { InicioComponent } from './inicio/inicio.component';
+import { TemaComponent } from './tema/tema.component';
 
 
 
@@ -22,6 +23,7 @@ import { InicioComponent } from './inicio/inicio.component';
     CadastrarComponent,
     RodapeComponent,
     InicioComponent,
+    TemaComponent,
   
   ],
   imports: [
