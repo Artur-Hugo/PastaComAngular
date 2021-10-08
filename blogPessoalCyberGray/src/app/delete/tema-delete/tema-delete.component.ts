@@ -11,13 +11,15 @@ import { environment } from 'src/environments/environment.prod';
 })
 export class TemaDeleteComponent implements OnInit {
 
+
   tema: Tema = new Tema()
   idTema: number
 
   constructor(
     private temaService: TemaService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+ 
   ) { }
 
   ngOnInit(){
@@ -27,6 +29,8 @@ export class TemaDeleteComponent implements OnInit {
 
     this.idTema = this.route.snapshot.params['id']
     this.findByIdTema(this.idTema)
+
+    
   }
 
   findByIdTema(id: number){

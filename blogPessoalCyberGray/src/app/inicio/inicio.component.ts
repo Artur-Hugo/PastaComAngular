@@ -6,6 +6,8 @@ import { Tema } from '../model/Tema';
 import { PostagemService } from '../service/postagem.service';
 import { TemaService } from '../service/tema.service';
 import {AuthService} from '../service/auth.service';
+import { Usuario } from '../model/Usuario';
+
 
 @Component({
   selector: 'app-inicio',
@@ -15,10 +17,15 @@ import {AuthService} from '../service/auth.service';
 export class InicioComponent implements OnInit {
 
   postagem: Postagem = new Postagem();
-  
+
+  listaPostagens: Postagem[]
   tema: Tema = new Tema()
   listaTemas: Tema[] 
   idTema: number
+
+  user: Usuario = new Usuario()
+  //Lá no enviroment temos o id do usuario, então:
+  idUser = environment.id
 
   constructor(
     private router: Router,
@@ -33,7 +40,7 @@ export class InicioComponent implements OnInit {
       alert('Sua seção expirou, faça o login novamente.')
       this.router.navigate(['/entrar'])
     }
-
+    this.getAllPostagens()
     this.getAllTemas()
     this.auth.refreshToken()
 
@@ -45,15 +52,39 @@ export class InicioComponent implements OnInit {
     })
   }
 
+  
   findByIdTema(){
     this.temaService.getByIdTema(this.idTema).subscribe((resp: Tema) =>{
       this.tema = resp
     })
   }
 
-  public(){
+  getAllPostagens(){
+    this.postagemService.getAllPostagens().subscribe((resp: Postagem[])=>{
+      this.listaPostagens = resp
+    })
+  }
+
+  findByIdUsuario(){
+    this.auth.getByIdUsuario(this.idUser).subscribe((resp : Usuario) =>{
+      this.user = resp
+    })
+  }
+
+  publicar(){
     //especificando o id.tema
     this.tema.id = this.idTema
+    this.postagem.tema = this.tema
+
+    this.user.id = this.idUser
+    this.postagem.usuario = this.user
+
+    this.postagemService.postPostagem(this.postagem).subscribe((resp: Postagem) =>{
+      this.postagem = resp
+      alert('Postagem realizada com sucesso!') 
+      this.postagem = new Postagem()
+      this.getAllPostagens()
+    })   
   }
 
 }

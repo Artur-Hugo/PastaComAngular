@@ -16,10 +16,12 @@ export class EntrarComponent implements OnInit {
   constructor(
     private auth: AuthService,
     private router: Router
+
   ) { }
 
   ngOnInit(){
     window.scroll(0,0)
+    this.auth.refreshToken()
   }
 
   entrar(){
