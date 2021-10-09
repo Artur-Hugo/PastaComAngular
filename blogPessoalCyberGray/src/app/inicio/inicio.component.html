@@ -36,7 +36,7 @@
               id="nav-todasPostagens-tab" data-toggle="tab" href="#todasPostagens" role="tab" 
               aria-controls="nav-todasPostagens" aria-selected="true">Todas as Postagens</a>
               
-              <a (click)='findByIdUsuario()' class="nav-item nav-link text-secondary font-weight-bold" 
+              <a (click)="findByIdUsuario()" class="nav-item nav-link text-secondary font-weight-bold" 
               id="nav-minhasPostagens-tab" data-toggle="tab" href="#minhasPostagens" role="tab" 
               aria-controls="nav-minhasPostagens" aria-selected="false">Minhas Postagens</a>
               
@@ -64,6 +64,10 @@
                                    by: {{item.usuario.nome}}
                                 </small>
                             </p>
+
+                            <a [routerLink]="['/postagem-edit', item.id]" class="text-info mr-3" href="">Editar</a>
+                            <a [routerLink]="['/postagem-delete', item.id]" class="text-danger" href="">Apagar</a>
+
                         </div>
                     </div>
                 </div>
@@ -71,29 +75,51 @@
             <div class="tab-pane fade" id="minhasPostagens" role="tabpanel" aria-labelledby="nav-minhasPostagens-tab">
                 
                 <div class="card-columns">
-                    <div class="card text-center" *ngFor='let item of user.postagem'>
+                    <div class="card text-center" *ngFor='let useritem of user.postagem'>
                         <div class="card-body">
-                            <h5 class="card-title">{{item.titulo}}</h5>
-                          
-                            <p class="card-text">{{item.texto}}</p>
+                            <h5 class="card-title">{{useritem.titulo}}</h5>
+                            <small class="text-muted"> Tema: {{ useritem.tema.descricao }}</small>
+                            <p class="card-text">{{useritem.texto}}</p>
                             <p class="card-text">
                                 <small class="text-muted">
-                                    {{item.data}}
+                                    {{useritem.data}}
                                 </small>
                             </p>
 
                             <p class="card-text">
                                 <small class="text-muted">
-                                   by: {{item.usuario.nome}}
+                                   by: {{useritem.usuario.nome}}
                                 </small>
                             </p>
+
+                            <a [routerLink]="['/postagem-edit', useritem.id]" class="text-info mr-3" href="">Editar</a>
+                            <a [routerLink]="['/postagem-delete', useritem.id]" class="text-danger" href="">Apagar</a>
+
                         </div>
                     </div>
                 </div>
 
             </div>
             <div class="tab-pane fade" id="postagemTema" role="tabpanel" aria-labelledby="nav-postagemTema-tab">
-                Postagens por tema
+                   <!-- ! Inicio dos cards de Postagem por Tema -->
+      <div class="card-columns" *ngFor="let tema of listaTemas">
+        <div class="card text-center" *ngFor="let item of tema.postagem">
+          <div class="card-body">
+            <h5 class="card-title m-0">{{ item.titulo }}</h5>
+            <p class="card-text mt-3">{{ item.texto }}</p>
+            <p class="card-text">
+              <small class="text-muted">
+                {{ item.data }}
+              </small>
+            </p>
+
+            <p class="card-text">
+              <small class="text-muted"> by: {{ item.usuario.nome }} </small>
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- ! Fim dos cards de Postagem por Tema -->
             </div>
           </div>
     </div>
@@ -125,7 +151,7 @@
                 <div class="form-group">
                     <label for="texto">Escolha um tema ou <a routerLink="/tema" data-dismiss="modal">cadastre um novo</a>: </label>
                     <select [(ngModel)]='idTema'  (change)='findByIdTema()' name="tema" id="tema" class="form-control" >
-                        <option *ngFor='let item of listaTemas' value="{{item.id}}">{{item.descricao}}</option>
+                        <option *ngFor='let tema of listaTemas' value="{{tema.id}}">{{tema.descricao}}</option>
                     </select>
                 </div>
             </div>
