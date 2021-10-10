@@ -35,6 +35,10 @@ export class AuthService {
     return this.http.get<Usuario>(`https://blogcybercinza.herokuapp.com/usuarios/${id}`,this.token)
   }
 
+  putUsuario(user: Usuario): Observable<Usuario>{
+    return this.http.put<Usuario>('https://blogcybercinza.herokuapp.com/usuarios/alterar',user, this.token)
+  }
+
   logado(){
     let ok: boolean = false
 

@@ -11,6 +11,8 @@ export class MenuComponent implements OnInit {
 
   nome = environment.nome
   foto = environment.foto
+  //Id: para saber qual usuario está logado, descobrir pelo o menu
+  id = environment.id
 
   constructor(
     private router: Router
