@@ -29,6 +29,10 @@ export class TemaService {
     return this.http.get<Tema>(`https://blogcybercinza.herokuapp.com/tema/${id}`, this.token)
   }
 
+  getByNomeTema(descricao: string): Observable<Tema[]>{
+    return this.http.get<Tema[]>(`https://blogcybercinza.herokuapp.com/tema/descricao/${descricao}`, this.token)
+  }
+
   postTema(tema: Tema): Observable<Tema>{
     //o this.token é para ter o acesso
     return this.http.post<Tema>('https://blogcybercinza.herokuapp.com/tema', tema, this.token)
